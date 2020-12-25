@@ -42,15 +42,15 @@ export default function ZoomableImage({ children, ...props }) {
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 200;
             opacity: 0;
-            transition: opacity 0.15s ease-out;
+            transition: opacity 0.15s ease;
 
             &[data-enter] {
               opacity: 1;
             }
 
             img {
-              transform: scale(0);
-              transition: transform 0.15s ease-out;
+              transform: scale(0.8);
+              transition: transform 0.15s ease;
             }
 
             &[data-enter] img {
