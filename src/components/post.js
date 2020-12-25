@@ -11,6 +11,7 @@ import TopicTag from './topic-tag';
 import ReactionsList from './reactions-list';
 import PostInfo from './post-info';
 import PopularComments from './popular-comments';
+import dedupe from '../utils/dedupe';
 
 const AllComments = dynamic(() => import('./all-comments'));
 const Darsys = dynamic(() => import('./darsys'));
@@ -52,6 +53,10 @@ let Post = function Post({ postID, placeholderData, closeButton, modalRef }) {
         <Head
           title={`${post.title} - ${post.forumName}板`}
           description={post.excerpt}
+          images={
+            // TODO: Resize and host it via next/image
+            post.mediaMeta && dedupe(post.mediaMeta.map((media) => media.url))
+          }
         />
 
         <div

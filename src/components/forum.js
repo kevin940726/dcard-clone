@@ -362,7 +362,14 @@ function Forum({ children }) {
 
   return (
     <>
-      <Head title={forum && `${forum.name}板`} />
+      <Head
+        title={forum && `${forum.name}板`}
+        images={
+          forum
+            ? [forum.heroImage?.url ?? '/forum-hero-placeholder.svg']
+            : undefined
+        }
+      />
 
       {forum ? <ForumLayout forum={forum} /> : <IndexForumLayout />}
 
