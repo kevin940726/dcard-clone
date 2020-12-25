@@ -1,4 +1,5 @@
 import BaseApp from 'next/app';
+import Error from 'next/error';
 import { createGlobalStyle } from 'styled-components';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import { Hydrate, dehydrate } from 'react-query/hydration';
@@ -60,6 +61,10 @@ const getQueryClientConfig = (req) => ({
 const queryClient = new QueryClient(getQueryClientConfig());
 
 function App({ Component, pageProps, dehydratedState, ...rest }) {
+  if (!dehydratedState) {
+    return <Error statusCode={rest.statusCode ?? 404} />;
+  }
+
   const children = <Component {...pageProps} />;
   const withLayout = Component.getLayout?.(children)?.(pageProps) ?? children;
 
@@ -79,7 +84,18 @@ App.getInitialProps = async function getInitialProps(context) {
 
   // Skip prefetching on client-side
   if (typeof window === 'undefined') {
-    await context.Component.prefetchQueries?.(queryClient, context);
+    try {
+      const error = await context.Component.prefetchQueries?.(
+        queryClient,
+        context
+      );
+
+      if (error) {
+        return error;
+      }
+    } catch (error) {
+      return {};
+    }
   }
 
   // Don't send the whole forums data to client side on initial page load

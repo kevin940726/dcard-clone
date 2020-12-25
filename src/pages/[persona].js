@@ -108,11 +108,18 @@ PersonaPage.prefetchQueries = async function prefetchQueries(
   queryClient,
   context
 ) {
-  const { persona } = context.router.query;
+  const { persona: personaWithAt } = context.router.query;
+
+  if (!personaWithAt.startsWith('@')) {
+    return { statusCode: 404 };
+  }
+
+  const persona = personaWithAt.slice(1);
 
   await Promise.all([
     Layout.prefetchQueries(queryClient, context),
-    queryClient.prefetchQuery(`personas/${persona}`),
+    // Use fetchQuery to catch the errors
+    queryClient.fetchQuery(`personas/${persona}`),
     PersonaPostsList.prefetchQueries(queryClient, context),
   ]);
 };
