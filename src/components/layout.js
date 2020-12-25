@@ -138,11 +138,13 @@ function Layout({ children, aside, ...props }) {
   });
 
   const popularForums = useMemo(
-    () => popularForumsResult.map((forum) => forums?.[forum.alias]),
+    () =>
+      popularForumsResult.map((forum) => forums?.[forum.alias]).filter(Boolean),
     [popularForumsResult, forums]
   );
   const selectedForums = useMemo(
-    () => selectedForumsList.map((forum) => forums?.[forum.alias]),
+    () =>
+      selectedForumsList.map((forum) => forums?.[forum.alias]).filter(Boolean),
     [selectedForumsList, forums]
   );
 
