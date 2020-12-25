@@ -168,6 +168,7 @@ function Layout({ children, aside, ...props }) {
           background: rgb(0, 106, 166);
           color: white;
           z-index: 10;
+          min-width: 1280px;
         `}
       >
         <div
