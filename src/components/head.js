@@ -5,6 +5,7 @@ export default function Head({ title, description, children }) {
 
   return (
     <NextHead>
+      <meta name="robots" content="noindex" />
       <title>{normalizedTitle}</title>
       <meta name="og:title" content={normalizedTitle} />
       <meta name="description" content={description} />
