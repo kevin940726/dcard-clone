@@ -87,7 +87,6 @@ App.getInitialProps = async function getInitialProps(context) {
     try {
       await context.Component.prefetchQueries?.(queryClient, context);
     } catch (error) {
-      console.log('error', error);
       if (error.statusCode) {
         return error;
       }

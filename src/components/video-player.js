@@ -26,6 +26,7 @@ function YouTubePlayIcon(props) {
 const PlayerContainer = styled.div`
   padding-top: 56.25%;
   position: relative;
+  background: #000;
 `;
 
 const IFrame = styled.iframe`

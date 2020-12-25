@@ -99,7 +99,7 @@ function PostItem(
   const displaySchool = !anonymousSchool && school;
   const displayDepartment = !anonymousDepartment && department;
   const image =
-    mediaMeta.find((media) => media.type.startsWith('image/')) ?? media[0];
+    mediaMeta.find((meta) => meta.type.startsWith('image/')) ?? media[0];
 
   const LinkAgnostic = href ? 'a' : ({ children }) => children;
 
@@ -175,7 +175,7 @@ function PostItem(
           <VideoPlayer
             type="video/youtube"
             src={video?.normalizedUrl}
-            thumbnail={image.url}
+            thumbnail={video?.thumbnail}
             css={css`
               border-radius: 12px;
               overflow: hidden;
