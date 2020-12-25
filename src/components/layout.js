@@ -285,6 +285,7 @@ Layout.prefetchQueries = async function prefetchQueries(queryClient) {
     queryClient.fetchQuery('forums'),
     queryClient.fetchQuery(['forums/popular-forums', { limit: 8 }]),
     queryClient.fetchQuery('forums/selected-forums'),
+    queryClient.prefetchQuery('posts/reactions'),
   ]);
 
   const forumsById = mapForumsById(forums);

@@ -151,7 +151,7 @@ function PostItem(
             left: 0;
             right: 0;
             margin: auto;
-            z-index: 2;
+            z-index: 6;
           `}
         />
       </div>
@@ -179,7 +179,7 @@ function PostItem(
             css={css`
               border-radius: 12px;
               overflow: hidden;
-              z-index: 2;
+              z-index: 6;
             `}
           />
         </div>
@@ -197,7 +197,7 @@ function PostItem(
             postID={postID}
             css={css`
               position: relative;
-              z-index: 2;
+              z-index: 6;
             `}
           />
         </div>
@@ -210,7 +210,7 @@ function PostItem(
             src={link}
             css={css`
               position: relative;
-              z-index: 2;
+              z-index: 6;
             `}
           />
         </div>
@@ -254,7 +254,7 @@ function PostItem(
               position: relative;
               width: 100%;
               height: 100%;
-              z-index: 2;
+              z-index: 6;
             `}
           />
         </div>
@@ -351,7 +351,7 @@ function PostItem(
                 left: 0;
                 height: 100%;
                 width: 100%;
-                z-index: 1;
+                z-index: 5;
               }
             `}
           >

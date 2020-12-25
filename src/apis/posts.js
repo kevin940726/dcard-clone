@@ -87,3 +87,5 @@ export const getDarsys = (postID) => api(`darsys/${postID}`);
 
 export const getPostPreview = (postID) =>
   api('posts', { query: { id: postID } });
+
+export const getReactions = () => api('reactions');
