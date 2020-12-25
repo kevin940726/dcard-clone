@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { css } from 'styled-components';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import useCurrent from './use-current';
@@ -34,6 +35,21 @@ export default function usePostsList(
   const children = (
     <>
       {hasNextPage && anchor}
+      {!isFetching && !hasNextPage && (
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 120px;
+            color: rgba(0, 0, 0, 0.35);
+            font-size: 14px;
+          `}
+        >
+          沒有更多文章囉！
+        </div>
+      )}
       <PostModal
         placeholderData={posts[postIndex]}
         prevPost={prevPost}

@@ -6,6 +6,7 @@ import { css } from 'styled-components';
 import usePostsList from '../hooks/use-posts-list';
 import useModalParentLocation from '../hooks/use-modal-parent-location';
 import PostItem from './post-item';
+import dedupe from '../utils/dedupe';
 
 function PostsList() {
   const router = useRouter();
@@ -29,7 +30,13 @@ function PostsList() {
   const isLoading = isFetching || isFetchingNextPage;
 
   const posts = useMemo(
-    () => (data ? data.pages.flatMap((page) => page.items) : []),
+    () =>
+      data
+        ? dedupe(
+            data.pages.flatMap((page) => page.items),
+            (post) => post.id
+          )
+        : [],
     [data]
   );
 

@@ -1,6 +1,5 @@
 import { api, HOST } from './api';
 import { filterQuery } from '../utils/filter-query';
-import dedupe from '../utils/dedupe';
 
 export const getPosts = ({ popular = true, limit = 30, before } = {}) =>
   api('posts', { query: { popular, limit, before } });
@@ -55,8 +54,6 @@ export const getInfinitePosts = async ({
       });
 
       posts = posts.concat(latestPosts);
-      // Sometimes there are duplicate items between each request
-      posts = dedupe(posts, (post) => post.id);
 
       if (posts.length < limit) {
         nextQuery = null;
