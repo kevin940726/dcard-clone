@@ -271,7 +271,8 @@ Post.prefetchQueries = async function prefetchQueries(queryClient, context) {
   const { postID } = context.router.query;
 
   await Promise.all([
-    queryClient.prefetchQuery(`posts/${postID}`),
+    // Use fetchQuery to catch the error
+    queryClient.fetchQuery(`posts/${postID}`),
     // Loaded in popular-comments
     queryClient.prefetchQuery([`posts/${postID}/comments`, { popular: true }]),
     // Loaded in darsys

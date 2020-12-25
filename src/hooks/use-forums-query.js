@@ -50,3 +50,36 @@ export function useForumByID(id) {
 
   return forumsByID?.[id];
 }
+
+export async function fetchForumByAlias(queryClient, alias) {
+  const forums = await queryClient.fetchQuery('forums');
+
+  const forum = forums[alias];
+
+  if (!forum) {
+    throw { statusCode: 404 };
+  }
+
+  setDehydratedForums(queryClient, {
+    [alias]: forum,
+  });
+
+  return forum;
+}
+
+export async function fetchForumByID(queryClient, id) {
+  const forums = await queryClient.fetchQuery('forums');
+  const forumsByID = mapForumsById(forums);
+
+  const forum = forumsByID[id];
+
+  if (!forum) {
+    throw { statusCode: 404 };
+  }
+
+  setDehydratedForums(queryClient, {
+    [forum.alias]: forum,
+  });
+
+  return forum;
+}

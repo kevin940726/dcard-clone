@@ -85,16 +85,13 @@ App.getInitialProps = async function getInitialProps(context) {
   // Skip prefetching on client-side
   if (typeof window === 'undefined') {
     try {
-      const error = await context.Component.prefetchQueries?.(
-        queryClient,
-        context
-      );
-
-      if (error) {
+      await context.Component.prefetchQueries?.(queryClient, context);
+    } catch (error) {
+      console.log('error', error);
+      if (error.statusCode) {
         return error;
       }
-    } catch (error) {
-      return {};
+      return { statusCode: 404, error };
     }
   }
 

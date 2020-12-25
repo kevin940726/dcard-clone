@@ -111,7 +111,7 @@ PersonaPage.prefetchQueries = async function prefetchQueries(
   const { persona: personaWithAt } = context.router.query;
 
   if (!personaWithAt.startsWith('@')) {
-    return { statusCode: 404 };
+    throw { statusCode: 404 };
   }
 
   const persona = personaWithAt.slice(1);

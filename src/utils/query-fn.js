@@ -14,7 +14,7 @@ function getAbsoluteURL(req, localhost) {
   return protocol + '//' + host;
 }
 
-export default function queryFn(context) {
+export default async function queryFn(context) {
   const [key, queries] = context.queryKey;
   const nextQuery = context.pageParam ?? {};
 
@@ -30,5 +30,12 @@ export default function queryFn(context) {
 
   const url = `${host}/api/${key}${search}`;
 
-  return fetch(url).then((res) => res.json());
+  const response = await fetch(url);
+  const data = await response.json();
+
+  if (data.error) {
+    throw data;
+  }
+
+  return data;
 }

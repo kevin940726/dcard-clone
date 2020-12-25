@@ -16,6 +16,7 @@ PostPage.prefetchQueries = async function prefetchQueries(
 ) {
   await Promise.all([
     Layout.prefetchQueries(queryClient, context),
+    queryClient.fetchQuery(`posts/${context.router.query.postID}`),
     Post.prefetchQueries(queryClient, context),
   ]);
 };
