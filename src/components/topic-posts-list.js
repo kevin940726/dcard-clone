@@ -57,6 +57,7 @@ function TopicPostsList() {
             aria-describedby={`${post.id}_header ${post.id}_description ${post.id}_footer`}
             css={css`
               display: flex;
+              position: relative;
               margin: 0 40px;
               padding: 20px;
               border-bottom: 1px solid rgb(233, 233, 233);

@@ -256,7 +256,6 @@ function PostItem(
         css={css`
           min-width: 0;
           flex-grow: 1;
-          position: relative;
         `}
       >
         <div
@@ -334,6 +333,7 @@ function PostItem(
                 left: 0;
                 height: 100%;
                 width: 100%;
+                z-index: 1;
               }
             `}
           >
