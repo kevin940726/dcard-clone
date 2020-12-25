@@ -3,7 +3,7 @@ import { useInfiniteQuery } from 'react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import useInfinite from '../hooks/use-infinite';
-import useForumsQuery from '../hooks/use-forums-query';
+import { useForumsByIDQuery } from '../hooks/use-forums-query';
 
 function ForumItem({ forumAlias, name, logo, isTop3 }) {
   return (
@@ -82,7 +82,7 @@ function PopularForums() {
 
   const popularForums = data ? data.pages.flatMap((page) => page.items) : [];
 
-  const { data: forums } = useForumsQuery();
+  const { data: forumsByID } = useForumsByIDQuery();
 
   return (
     <div
@@ -117,7 +117,7 @@ function PopularForums() {
             key={forum.id}
             name={forum.name}
             forumAlias={forum.alias}
-            logo={forums?.[forum.alias]?.logo?.url}
+            logo={forumsByID?.[forum.id]?.logo?.url}
             isTop3={index < 3}
           />
         ))}

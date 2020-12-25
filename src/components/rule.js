@@ -3,7 +3,10 @@ import Link from 'next/link';
 import { css } from 'styled-components';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
-import useForumsQuery, { setDehydratedForums } from '../hooks/use-forums-query';
+import {
+  setDehydratedForums,
+  useForumByAlias,
+} from '../hooks/use-forums-query';
 
 function Moderators({ moderators }) {
   if (!moderators.length) {
@@ -111,8 +114,7 @@ function Rule() {
   const router = useRouter();
   const { forumAlias } = router.query;
 
-  const { data: forums } = useForumsQuery();
-  const forum = forums?.[forumAlias];
+  const forum = useForumByAlias(forumAlias);
   const forumID = forum?.id;
 
   const { data: bulletin } = useQuery([`forums/bulletin`, { forumID }], {
@@ -221,20 +223,20 @@ function Rule() {
   );
 }
 
-Rule.prefetchQueries = async function prefetchQueries(queryClientt, context) {
+Rule.prefetchQueries = async function prefetchQueries(queryClient, context) {
   const { forumAlias } = context.router.query;
-  const forums = await queryClientt.fetchQuery('forums');
+  const forums = await queryClient.fetchQuery('forums');
   const forum = forums[forumAlias];
 
   const forumID = forum.id;
 
-  await queryClientt.prefetchQuery([`forums/bulletin`, { forumID }]);
+  await queryClient.prefetchQuery([`forums/bulletin`, { forumID }]);
 
   const dehydratedForums = {
     [forum.alias]: forum,
   };
 
-  setDehydratedForums(queryClientt, dehydratedForums);
+  setDehydratedForums(queryClient, dehydratedForums);
 };
 
 export default Rule;

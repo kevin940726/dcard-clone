@@ -9,7 +9,10 @@ import {
   VisuallyHidden,
 } from 'reakit';
 import useParams from '../hooks/use-params';
-import useForumsQuery, { setDehydratedForums } from '../hooks/use-forums-query';
+import {
+  useForumByAlias,
+  setDehydratedForums,
+} from '../hooks/use-forums-query';
 import useModalParentLocation from '../hooks/use-modal-parent-location';
 import useAnimateHeight from '../hooks/use-animate-height';
 import Head from './head';
@@ -353,10 +356,9 @@ function ForumDetail({ forum }) {
 
 function Forum({ children }) {
   const { forumAlias } = useParams();
-  const { data: forums, isLoading } = useForumsQuery();
-  const forum = forums?.[forumAlias];
+  const forum = useForumByAlias(forumAlias);
 
-  if (isLoading) {
+  if (forumAlias && !forum) {
     return null;
   }
 
@@ -380,8 +382,7 @@ function Forum({ children }) {
 
 Forum.Aside = function Aside() {
   const { forumAlias } = useParams();
-  const { data: forums } = useForumsQuery();
-  const forum = forums?.[forumAlias];
+  const forum = useForumByAlias(forumAlias);
 
   if (!forum) {
     return null;

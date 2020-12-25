@@ -4,7 +4,11 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useQuery } from 'react-query';
-import useForumsQuery, { setDehydratedForums } from '../hooks/use-forums-query';
+import {
+  setDehydratedForums,
+  useForumsByIDQuery,
+  mapForumsById,
+} from '../hooks/use-forums-query';
 import SearchBar from './search-bar';
 
 function ForumItem({
@@ -126,7 +130,7 @@ function ForumsSection({ id, label, forums, children }) {
 
 function Layout({ children, aside, ...props }) {
   const router = useRouter();
-  const { data: forums } = useForumsQuery();
+  const { data: forumsById } = useForumsByIDQuery();
   const { data: popularForumsResult = [] } = useQuery(
     ['forums/popular-forums', { limit: 8 }],
     {
@@ -139,13 +143,15 @@ function Layout({ children, aside, ...props }) {
 
   const popularForums = useMemo(
     () =>
-      popularForumsResult.map((forum) => forums?.[forum.alias]).filter(Boolean),
-    [popularForumsResult, forums]
+      popularForumsResult
+        .map((forum) => forumsById?.[forum.id])
+        .filter(Boolean),
+    [popularForumsResult, forumsById]
   );
   const selectedForums = useMemo(
     () =>
-      selectedForumsList.map((forum) => forums?.[forum.alias]).filter(Boolean),
-    [selectedForumsList, forums]
+      selectedForumsList.map((forum) => forumsById?.[forum.id]).filter(Boolean),
+    [selectedForumsList, forumsById]
   );
 
   return (
@@ -277,9 +283,11 @@ Layout.prefetchQueries = async function prefetchQueries(queryClient) {
     queryClient.fetchQuery('forums/selected-forums'),
   ]);
 
+  const forumsById = mapForumsById(forums);
+
   const dehydratedForums = {};
   [...popularForumsData, ...selectedForums].forEach((forum) => {
-    dehydratedForums[forum.alias] = forums[forum.alias];
+    dehydratedForums[forum.alias] = forumsById[forum.id];
   });
 
   setDehydratedForums(queryClient, dehydratedForums);
