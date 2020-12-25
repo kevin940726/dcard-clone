@@ -71,6 +71,7 @@ function YouTubePlayer({ src, thumbnail, ...props }) {
             justify-content: center;
             cursor: pointer;
           `}
+          aria-label="播放"
           onClick={() => setPlayed(true)}
         >
           <Image src={thumbnail} alt="" layout="fill" objectFit="cover" />

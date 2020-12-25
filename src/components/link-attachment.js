@@ -174,7 +174,12 @@ export default function LinkAttachment({ src, ...props }) {
   }
 
   return (
-    <LinkWrapper href={src} target="_blank" rel="noopener noreferrer">
+    <LinkWrapper
+      href={src}
+      target="_blank"
+      rel="noopener noreferrer"
+      {...props}
+    >
       {content}
     </LinkWrapper>
   );

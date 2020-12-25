@@ -58,6 +58,7 @@ function ForumItem({
             {logo && (
               <Image
                 src={logo}
+                alt=""
                 width={logoSize}
                 height={logoSize}
                 css={css`
@@ -94,6 +95,8 @@ function ForumsSection({ id, label, forums, children }) {
           display: flex;
           align-items: center;
           height: 44px;
+          font-size: 14px;
+          font-weight: normal;
           padding: 0 10px 0 20px;
           margin: 0;
           color: rgba(255, 255, 255, 0.35);
@@ -286,8 +289,9 @@ Layout.prefetchQueries = async function prefetchQueries(queryClient) {
   const forumsById = mapForumsById(forums);
 
   const dehydratedForums = {};
-  [...popularForumsData, ...selectedForums].forEach((forum) => {
-    dehydratedForums[forum.alias] = forumsById[forum.id];
+  [...popularForumsData, ...selectedForums].forEach((forumData) => {
+    const forum = forumsById[forumData.id];
+    dehydratedForums[forum.alias] = forum;
   });
 
   setDehydratedForums(queryClient, dehydratedForums);

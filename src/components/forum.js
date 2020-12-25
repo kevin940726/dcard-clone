@@ -397,8 +397,14 @@ Forum.prefetchQueries = async function prefetchQueries(queryClient, context) {
   if (forumAlias) {
     const forums = await queryClient.fetchQuery('forums');
 
+    const forum = forums[forumAlias];
+
+    if (!forum) {
+      throw { statusCode: 404 };
+    }
+
     const dehydratedForums = {
-      [forumAlias]: forums[forumAlias],
+      [forumAlias]: forum,
     };
 
     setDehydratedForums(queryClient, dehydratedForums);

@@ -18,6 +18,7 @@ module.exports = {
       'megapx.dcard.tw',
       'imgur.dcard.tw',
       'img.youtube.com',
+      'pbs.twimg.com',
     ],
   },
 };

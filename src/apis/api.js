@@ -12,9 +12,12 @@ export async function api(path, { query, headers } = {}) {
   } catch (err) {}
 
   const endpoint = isAbsoluteURL ? path : `${API_ENDPOINT}/${path}`;
+  const filteredQuery = query ? filterQuery(query) : {};
 
   const url = `${encodeURI(endpoint)}${
-    query ? `?${querystring.stringify(filterQuery(query))}` : ''
+    Object.keys(filteredQuery).length > 0
+      ? `?${querystring.stringify(filteredQuery)}`
+      : ''
   }`;
 
   try {

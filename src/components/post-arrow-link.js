@@ -71,6 +71,7 @@ export default function PostArrowLink({
         },
       }}
       as={`/f/${post.forumAlias}/p/${post.id}`}
+      scroll={false}
       passHref
     >
       <a

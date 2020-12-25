@@ -98,7 +98,8 @@ function PostItem(
 ) {
   const displaySchool = !anonymousSchool && school;
   const displayDepartment = !anonymousDepartment && department;
-  const image = mediaMeta[0] ?? media[0];
+  const image =
+    mediaMeta.find((media) => media.type.startsWith('image/')) ?? media[0];
 
   const LinkAgnostic = href ? 'a' : ({ children }) => children;
 
@@ -150,6 +151,7 @@ function PostItem(
             left: 0;
             right: 0;
             margin: auto;
+            z-index: 2;
           `}
         />
       </div>
@@ -177,6 +179,7 @@ function PostItem(
             css={css`
               border-radius: 12px;
               overflow: hidden;
+              z-index: 2;
             `}
           />
         </div>
@@ -189,14 +192,27 @@ function PostItem(
       content = (
         <div>
           {contentDescription}
-          <PostPreview forumAlias={forumAlias} postID={postID} />
+          <PostPreview
+            forumAlias={forumAlias}
+            postID={postID}
+            css={css`
+              position: relative;
+              z-index: 2;
+            `}
+          />
         </div>
       );
     } else {
       content = (
         <div>
           {contentDescription}
-          <LinkAttachment src={link} />
+          <LinkAttachment
+            src={link}
+            css={css`
+              position: relative;
+              z-index: 2;
+            `}
+          />
         </div>
       );
     }
@@ -235,8 +251,10 @@ function PostItem(
             controls
             muted
             css={css`
+              position: relative;
               width: 100%;
               height: 100%;
+              z-index: 2;
             `}
           />
         </div>
@@ -385,7 +403,13 @@ function PostItem(
             border: 1px solid rgba(0, 0, 0, 0.1);
           `}
         >
-          <Image src={image.url} height={84} width={84} objectFit="cover" />
+          <Image
+            src={image.url}
+            alt=""
+            height={84}
+            width={84}
+            objectFit="cover"
+          />
         </div>
       )}
     </>
