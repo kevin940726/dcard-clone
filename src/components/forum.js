@@ -156,7 +156,7 @@ function IndexForumLayout({ navigateSort }) {
       `}
     >
       <TabList>
-        <Link href={modalParentLocation.asPath}>
+        <Link href={modalParentLocation.asPath} passHref>
           <TabList.Tab isActive>全部</TabList.Tab>
         </Link>
       </TabList>
@@ -172,7 +172,7 @@ function IndexForumLayout({ navigateSort }) {
           color: rgba(0, 0, 0, 0.35);
         `}
       >
-        文章排序依
+        <label id="posts-select-sort-order">文章排序依</label>
         <MenuButton
           css={css`
             cursor: pointer;
@@ -197,7 +197,7 @@ function IndexForumLayout({ navigateSort }) {
           </span>
           <ArrowIcon width="16" height="16" />
         </MenuButton>
-        <Menu menu={menu} aria-label="選擇文章排序">
+        <Menu menu={menu} aria-label="posts-select-sort-order">
           <SortMenuItem
             menu={menu}
             icon={PopularIcon}

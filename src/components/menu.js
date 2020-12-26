@@ -31,6 +31,7 @@ const MenuItem = forwardRef(({ menu, isActive, children, ...props }, ref) => {
       {...menu}
       // Both reakit and styled-components use "as" prop, this is a SC API to forward "as" to reakit.
       forwardedAs="a"
+      ref={ref}
       css={css`
         display: inline-flex;
         box-sizing: border-box;
