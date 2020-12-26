@@ -174,6 +174,7 @@ function Layout({ children, aside, ...props }) {
         <div
           css={css`
             display: flex;
+            position: relative;
             align-items: center;
             padding: 0 36px;
             max-width: 1280px;
@@ -182,6 +183,35 @@ function Layout({ children, aside, ...props }) {
             box-sizing: border-box;
           `}
         >
+          <a
+            href="#main"
+            css={css`
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: 36px;
+              color: #fff;
+              background: rgb(0, 106, 166);
+              display: inline-flex;
+              justify-content: center;
+              align-items: center;
+              padding: 10px;
+              margin: auto;
+              height: 20px;
+              min-width: 74.42px;
+              z-index: -100;
+              opacity: 0;
+              outline: 1px solid #fff;
+
+              &:focus {
+                z-index: 999;
+                opacity: 1;
+              }
+            `}
+          >
+            跳到主要內容
+          </a>
+
           <Link href="/f">
             <a title="Dcard" aria-label="Dcard">
               <Image src="/logo.svg" alt="Dcard" width={74.42} height={28} />
@@ -254,6 +284,7 @@ function Layout({ children, aside, ...props }) {
         </nav>
 
         <main
+          id="main"
           css={css`
             flex-shrink: 0;
             width: 728px;
