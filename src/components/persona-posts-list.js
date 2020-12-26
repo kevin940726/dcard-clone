@@ -14,7 +14,7 @@ function PersonaPostsList() {
   const { postID } = router.query;
   const isModalOpen = !!postID;
   const modalParentLocation = useModalParentLocation(isModalOpen);
-  const persona = modalParentLocation.query.persona.slice(1);
+  const { persona } = modalParentLocation.query;
 
   const {
     data,
@@ -156,7 +156,7 @@ PersonaPostsList.prefetchQueries = async function prefetchQueries(
   queryClient,
   context
 ) {
-  const persona = context.router.query.persona.slice(1);
+  const { persona } = context.router.query;
 
   await queryClient.prefetchInfiniteQuery(['personas/posts', { persona }]);
 };

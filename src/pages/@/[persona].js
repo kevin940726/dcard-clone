@@ -1,17 +1,17 @@
 import { css } from 'styled-components';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
-import Head from '../components/head';
-import PersonaPostsList from '../components/persona-posts-list';
-import withLayout from '../components/with-layout';
-import Layout from '../components/layout';
-import Avatar from '../components/avatar';
-import useModalParentLocation from '../hooks/use-modal-parent-location';
+import Head from '../../components/head';
+import PersonaPostsList from '../../components/persona-posts-list';
+import withLayout from '../../components/with-layout';
+import Layout from '../../components/layout';
+import Avatar from '../../components/avatar';
+import useModalParentLocation from '../../hooks/use-modal-parent-location';
 
 function PersonaInfo() {
   const router = useRouter();
   const modalParentLocation = useModalParentLocation(!!router.query.postID);
-  const persona = modalParentLocation.query.persona.slice(1);
+  const { persona } = modalParentLocation.query;
 
   const { data: personaInfo } = useQuery(`personas/${persona}`, {
     staleTime: Infinity,
@@ -108,13 +108,7 @@ PersonaPage.prefetchQueries = async function prefetchQueries(
   queryClient,
   context
 ) {
-  const { persona: personaWithAt } = context.router.query;
-
-  if (!personaWithAt.startsWith('@')) {
-    throw { statusCode: 404 };
-  }
-
-  const persona = personaWithAt.slice(1);
+  const { persona } = context.router.query;
 
   await Promise.all([
     Layout.prefetchQueries(queryClient, context),

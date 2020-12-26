@@ -6,6 +6,19 @@ module.exports = {
         destination: '/f',
         permanent: true,
       },
+      {
+        source: '/@/:persona',
+        destination: '/@:persona',
+        permanent: true,
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/@:persona',
+        destination: '/@/:persona',
+      },
     ];
   },
   images: {
