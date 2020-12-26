@@ -260,6 +260,7 @@ function Layout({ children, aside, ...props }) {
             margin: 20px 12px 0;
             border-radius: 4px 4px 0 0;
             background-color: #fff;
+            min-height: 100vh;
           `}
           {...props}
         >
