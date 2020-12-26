@@ -106,9 +106,13 @@ export default function PostArrowLink({
             }
           }
         `}
-        onClick={(event) => {
-          // FIXME: bug!?
-          activePostItemRef.current = event.currentTarget;
+        onClick={() => {
+          if (activePostItemRef.current) {
+            // Not idiomatic React code but it works
+            activePostItemRef.current = activePostItemRef.current
+              .closest('[role="feed"]')
+              ?.querySelector?.(`[aria-posinset="${postIndex + 1}"] a`);
+          }
         }}
       >
         <Article direction={direction}>
