@@ -3,10 +3,16 @@ import { css } from 'styled-components';
 import { VisuallyHidden } from 'reakit';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { useForumByAlias } from '../hooks/use-forums-query';
+import useModalParentLocation from '../hooks/use-modal-parent-location';
 
 export default function SearchBar() {
   const router = useRouter();
   const [value, setValue] = useState(router.query.query ?? '');
+  const modalParentLocation = useModalParentLocation(!!router.query.postID);
+  const { forumAlias, forum } = modalParentLocation.query;
+  const searchForumAlias = forumAlias ?? forum;
+  const forumData = useForumByAlias(searchForumAlias);
 
   return (
     <form
@@ -31,6 +37,11 @@ export default function SearchBar() {
             pathname: '/search',
             query: {
               query: value,
+              ...(searchForumAlias
+                ? {
+                    forum: searchForumAlias,
+                  }
+                : {}),
             },
           });
         }
@@ -55,8 +66,13 @@ export default function SearchBar() {
           max-width: 640px;
           background: rgb(0, 88, 138);
           outline: none;
+
+          &::placeholder {
+            color: rgba(255, 255, 255, 0.75);
+          }
         `}
         value={value}
+        placeholder={searchForumAlias ? `在${forumData.name}板搜尋` : undefined}
         onChange={(event) => setValue(event.target.value)}
       />
 

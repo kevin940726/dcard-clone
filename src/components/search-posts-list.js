@@ -59,7 +59,7 @@ function SearchPostsList({ thirdSlot }) {
   const { postID } = router.query;
   const isModalOpen = !!postID;
   const modalParentLocation = useModalParentLocation(isModalOpen);
-  const { query, sort, since, field } = modalParentLocation.query;
+  const { query, sort, since, field, forum } = modalParentLocation.query;
 
   const {
     data,
@@ -67,7 +67,7 @@ function SearchPostsList({ thirdSlot }) {
     hasNextPage,
     isFetching,
     isFetchingNextPage,
-  } = useInfiniteQuery(['search/posts', { query, sort, since, field }], {
+  } = useInfiniteQuery(['search/posts', { query, sort, since, field, forum }], {
     getNextPageParam: (lastGroup, pages) =>
       lastGroup.length < PAGE_SIZE
         ? null
