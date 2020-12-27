@@ -72,7 +72,11 @@ export default function SearchBar() {
           }
         `}
         value={value}
-        placeholder={searchForumAlias ? `在${forumData.name}板搜尋` : undefined}
+        placeholder={
+          searchForumAlias && forumData
+            ? `在${forumData.name}板搜尋`
+            : undefined
+        }
         onChange={(event) => setValue(event.target.value)}
       />
 
