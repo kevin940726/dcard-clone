@@ -103,10 +103,11 @@ function PostContent({ skipParsing, mediaMeta, children = '', ...props }) {
             );
             break;
           }
-          case 'video/youtube': {
+          case 'video/youtube':
+          case 'video/vivid': {
             content.push(
               <VideoPlayer
-                src={media.normalizedUrl}
+                src={media.normalizedUrl || media.url}
                 thumbnail={media.thumbnail}
                 type={media.type}
               />

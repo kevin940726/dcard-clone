@@ -113,6 +113,31 @@ function VimeoPlayer({ src, ...props }) {
   );
 }
 
+function HTML5Video({ src, thumbnail, ...props }) {
+  let normalizedUrl = src;
+  if (normalizedUrl.startsWith('https://www.dcard.tw/v2/vivid/videos/')) {
+    const urlObject = new URL(normalizedUrl);
+    const videoID = urlObject.pathname.slice('/v2/vivid/videos/'.length);
+    normalizedUrl = `https://vivid.dcard.tw/Public/${videoID}/source`;
+  }
+
+  return (
+    <video
+      src={normalizedUrl}
+      playsInline
+      autoPlay
+      controls
+      muted
+      poster={thumbnail}
+      css={css`
+        position: relative;
+        width: 100%;
+        height: 100%;
+      `}
+    />
+  );
+}
+
 export default function VideoPlayer({ type, ...props }) {
   switch (type) {
     case 'video/youtube': {
@@ -121,7 +146,8 @@ export default function VideoPlayer({ type, ...props }) {
     case 'video/vimeo': {
       return <VimeoPlayer {...props} />;
     }
+    case 'video/vivid':
     default:
-      return null;
+      return <HTML5Video {...props} />;
   }
 }
