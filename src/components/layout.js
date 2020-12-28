@@ -230,7 +230,7 @@ function Layout({ children, aside, ...props }) {
               cursor: pointer;
               margin-left: auto;
               color: #fff;
-              font-size: 16px;
+              font-size: 15px;
             `}
           >
             <span
@@ -238,7 +238,7 @@ function Layout({ children, aside, ...props }) {
                 margin-right: 8px;
               `}
             >
-              <Image src="/github-icon.svg" alt="" width={26} height={26} />
+              <Image src="/github-icon.svg" alt="" width={24} height={24} />
             </span>
             GitHub
           </a>
