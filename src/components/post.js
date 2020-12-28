@@ -14,6 +14,7 @@ import PostInfo from './post-info';
 import PopularComments from './popular-comments';
 import dedupe from '../utils/dedupe';
 
+const PostLabel = dynamic(() => import('./post-label'));
 const AllComments = dynamic(() => import('./all-comments'));
 const Darsys = dynamic(() => import('./darsys'));
 const PostPreview = dynamic(() => import('./post-preview'));
@@ -78,11 +79,14 @@ let Post = function Post({ postID, placeholderData, closeButton, modalRef }) {
     return null;
   }
 
+  const { customStyle } = post;
+
   return (
     <>
       <article
         css={css`
           padding: 40px 60px 0;
+          position: relative;
         `}
       >
         <Head
@@ -93,6 +97,34 @@ let Post = function Post({ postID, placeholderData, closeButton, modalRef }) {
             post.mediaMeta && dedupe(post.mediaMeta.map((media) => media.url))
           }
         />
+
+        {customStyle?.headerColor && (
+          <>
+            <div
+              css={css`
+                height: 28px;
+                width: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                ${!modalRef &&
+                css`
+                  border-top-left-radius: 4px;
+                  border-top-right-radius: 4px;
+                `}
+              `}
+              style={{
+                background: customStyle.headerColor,
+              }}
+            />
+            <div
+              css={css`
+                height: 28px;
+              `}
+            />
+          </>
+        )}
 
         <div
           css={css`
@@ -112,6 +144,21 @@ let Post = function Post({ postID, placeholderData, closeButton, modalRef }) {
 
           {closeButton}
         </div>
+
+        {customStyle?.label && (
+          <PostLabel
+            style={{ background: customStyle.label.bgColor }}
+            css={css`
+              font-size: 18px;
+              font-weight: 500;
+              padding: 4px 7px;
+              line-height: 24px;
+              margin-bottom: 18px;
+            `}
+          >
+            {customStyle.label.text}
+          </PostLabel>
+        )}
 
         <h1
           id="post-title"

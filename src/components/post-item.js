@@ -4,13 +4,13 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import ReactionsList from './reactions-list';
 import Avatar from './avatar';
-import PostLabel from './post-label';
 import ZoomableImage from './zoomable-image';
 import Highlight from './highlight';
 
 const VideoPlayer = dynamic(() => import('./video-player'));
 const LinkAttachment = dynamic(() => import('./link-attachment'));
 const PostPreview = dynamic(() => import('./post-preview'));
+const PostLabel = dynamic(() => import('./post-label'));
 
 const formatter = new Intl.RelativeTimeFormat('zh-TW');
 
@@ -315,9 +315,22 @@ function PostItem(
             )}
             {!displaySchool && !displayDepartment && '匿名'}
             {displaySchool} {!withNickname && displayDepartment}
-            {pinned && <PostLabel>置頂</PostLabel>}
+            {pinned && (
+              <PostLabel
+                css={css`
+                  margin-left: 8px;
+                `}
+              >
+                置頂
+              </PostLabel>
+            )}
             {customStyle?.label && (
-              <PostLabel bgColor={customStyle.label.bgColor}>
+              <PostLabel
+                style={{ background: customStyle.label.bgColor }}
+                css={css`
+                  margin-left: 8px;
+                `}
+              >
                 {customStyle.label.text}
               </PostLabel>
             )}
