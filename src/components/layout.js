@@ -219,6 +219,29 @@ function Layout({ children, aside, ...props }) {
           </Link>
 
           <SearchBar />
+
+          <a
+            href="https://github.com/kevin940726/dcard-clone"
+            target="_blank"
+            rel="noopener noreferrer"
+            css={css`
+              display: inline-flex;
+              align-items: center;
+              cursor: pointer;
+              margin-left: auto;
+              color: #fff;
+              font-size: 16px;
+            `}
+          >
+            <span
+              css={css`
+                margin-right: 8px;
+              `}
+            >
+              <Image src="/github-icon.svg" alt="" width={26} height={26} />
+            </span>
+            GitHub
+          </a>
         </div>
       </header>
 
