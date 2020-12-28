@@ -63,6 +63,7 @@ export default function CommentModal() {
             transform: scale(1);
           }
         `}
+        tabIndex="0"
         aria-label={`B${floor}`}
       >
         {isOpen && <Floor />}
