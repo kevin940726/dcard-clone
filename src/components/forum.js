@@ -19,9 +19,7 @@ import Head from './head';
 import TabList from './tab-list';
 import ArrowIcon from './arrow-icon';
 import TopicTag from './topic-tag';
-import { PopularIcon, LatestIcon } from './sort-icons';
 import ForumPostsFrequency from './forum-posts-frequency';
-import { useMenuState, Menu, MenuItem, MenuButton } from './menu';
 
 const Header = styled.header`
   position: sticky;
@@ -113,39 +111,10 @@ function ForumLayout({ forum }) {
   );
 }
 
-function SortMenuItem({ menu, icon: Icon, label, href, ...props }) {
-  return (
-    <Link href={href} passHref>
-      <MenuItem menu={menu} onClick={menu.hide} {...props}>
-        <Icon width={18} height={18} />
-        <span
-          css={css`
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            flex-grow: 1;
-            margin-left: 10px;
-          `}
-        >
-          {label}
-        </span>
-      </MenuItem>
-    </Link>
-  );
-}
-
-function IndexForumLayout({ navigateSort }) {
+function IndexForumLayout() {
   const router = useRouter();
   const modalParentLocation = useModalParentLocation(!!router.query.postID);
   const { latest } = modalParentLocation.query;
-  const Icon = latest ? LatestIcon : PopularIcon;
-  const label = latest ? '最新' : '熱門';
-
-  const menu = useMenuState({
-    baseId: 'posts-sort-drawer',
-    placement: 'bottom-end',
-    gutter: 30,
-  });
 
   return (
     <Header
@@ -156,67 +125,21 @@ function IndexForumLayout({ navigateSort }) {
       `}
     >
       <TabList>
-        <Link href={modalParentLocation.asPath} passHref>
-          <TabList.Tab isActive>全部</TabList.Tab>
+        <Link href="/f" passHref>
+          <TabList.Tab isActive={!latest}>熱門</TabList.Tab>
+        </Link>
+        <Link
+          href={{
+            pathname: '/f',
+            query: {
+              latest: true,
+            },
+          }}
+          passHref
+        >
+          <TabList.Tab isActive={latest}>最新</TabList.Tab>
         </Link>
       </TabList>
-
-      <div
-        css={css`
-          display: flex;
-          align-items: center;
-          height: 30px;
-          margin-left: auto;
-          border-left: 1px solid rgb(222, 222, 222);
-          padding-left: 15px;
-          color: rgba(0, 0, 0, 0.35);
-        `}
-      >
-        <label id="posts-select-sort-order">文章排序依</label>
-        <MenuButton
-          css={css`
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            color: rgb(51, 151, 207);
-            margin-left: 5px;
-
-            svg {
-              fill: rgb(51, 151, 207);
-            }
-          `}
-          menu={menu}
-        >
-          <Icon width="16" height="16" />
-          <span
-            css={css`
-              margin: 0 2px;
-            `}
-          >
-            {label}
-          </span>
-          <ArrowIcon width="16" height="16" />
-        </MenuButton>
-        <Menu menu={menu} aria-label="posts-select-sort-order">
-          <SortMenuItem
-            menu={menu}
-            icon={PopularIcon}
-            label="熱門"
-            isActive={!latest}
-            href="/f"
-          />
-          <SortMenuItem
-            menu={menu}
-            icon={LatestIcon}
-            label="最新"
-            isActive={latest}
-            href={{
-              pathname: '/f',
-              query: { latest: true },
-            }}
-          />
-        </Menu>
-      </div>
     </Header>
   );
 }
