@@ -81,7 +81,12 @@ export const getComment = (postID, floor) =>
   }).then(([comment]) => comment);
 
 export const getLinkAttachment = (url) =>
-  api(`${HOST}/v2/linkAttachment`, { query: { url } });
+  api(`${HOST}/v2/linkAttachment`, {
+    query: { url },
+    headers: {
+      'request-through-cf': true,
+    },
+  });
 
 export const getDarsys = (postID) => api(`darsys/${postID}`);
 

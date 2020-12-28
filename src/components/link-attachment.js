@@ -132,7 +132,7 @@ export function LinkPreview({
 }
 
 export default function LinkAttachment({ src, ...props }) {
-  const { data: linkAttachment } = useQuery(
+  const { data: linkAttachment, isLoading } = useQuery(
     ['posts/link-attachment', { url: src }],
     {
       staleTime: Infinity,
@@ -140,8 +140,11 @@ export default function LinkAttachment({ src, ...props }) {
   );
 
   let content = null;
-  if (linkAttachment) {
-    const { description, domain, favicon, image, title } = linkAttachment;
+  if (!isLoading) {
+    const { description, domain, favicon, image, title } = linkAttachment ?? {
+      title: '無法取得網頁資訊',
+      domain: new URL(src).hostname,
+    };
 
     content = (
       <LinkPreview
