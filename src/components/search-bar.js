@@ -111,6 +111,10 @@ export default function SearchBar() {
           align-items: center;
           padding: 0 9px;
           cursor: pointer;
+
+          &:disabled {
+            cursor: default;
+          }
         `}
       >
         <Image src="/search.svg" alt="搜尋" width={20} height={20} />
