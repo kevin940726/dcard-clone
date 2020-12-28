@@ -73,7 +73,7 @@ function App({ Component, pageProps, dehydratedState, ...rest }) {
       <Hydrate state={dehydratedState}>
         <GlobalStyle />
         <Provider>{withLayout}</Provider>
-        <ReactQueryDevtools />
+        <ReactQueryDevtools position="bottom-right" />
       </Hydrate>
     </QueryClientProvider>
   );

@@ -10,6 +10,7 @@ import {
   mapForumsById,
 } from '../hooks/use-forums-query';
 import SearchBar from './search-bar';
+import customScrollbar from '../utils/custom-scrollbar';
 
 function ForumItem({
   as: Component = 'li',
@@ -288,6 +289,8 @@ function Layout({ children, aside, ...props }) {
             css={css`
               height: 100%;
               overflow: auto;
+
+              ${customScrollbar};
             `}
           >
             <ForumsSection
