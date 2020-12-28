@@ -233,14 +233,18 @@ let Post = function Post({ postID, placeholderData, closeButton, modalRef }) {
         </footer>
       </article>
 
-      <Section aria-labelledby="post-info-title">
+      <Section
+        aria-labelledby="post-info-title"
+        css={css`
+          display: flex;
+          flex-direction: column;
+        `}
+      >
         <H2 id="post-info-title">文章資訊</H2>
 
         <PostInfo
           forumAlias={post.forumAlias}
-          css={css`
-            margin: 16px 0;
-          `}
+          persona={post.withNickname && post.department}
         />
       </Section>
 
@@ -301,9 +305,18 @@ Post = memo(Post);
 Post.prefetchQueries = async function prefetchQueries(queryClient, context) {
   const { postID } = context.router.query;
 
-  await Promise.all([
+  async function loadPostAndPersonaInfo() {
     // Use fetchQuery to catch the error
-    queryClient.fetchQuery(`posts/${postID}`),
+    const postInfo = await queryClient.fetchQuery(`posts/${postID}`);
+
+    const persona = postInfo.withNickname && postInfo.department;
+    if (persona) {
+      await queryClient.prefetchQuery(`personas/${persona}`);
+    }
+  }
+
+  await Promise.all([
+    loadPostAndPersonaInfo(),
     // Loaded in popular-comments
     queryClient.prefetchQuery([`posts/${postID}/comments`, { popular: true }]),
     // Loaded in darsys

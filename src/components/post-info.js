@@ -3,21 +3,27 @@ import { css } from 'styled-components';
 import Image from 'next/image';
 import { useQuery } from 'react-query';
 import ForumPostsFrequency from './forum-posts-frequency';
+import UserInfo from './user-info';
 
-export default function PostInfo({ forumAlias, ...props }) {
+export default function PostInfo({ forumAlias, persona, ...props }) {
   const { data: forums } = useQuery('forums', { staleTime: Infinity });
+  const { data: personaInfo } = useQuery(`personas/${persona}`, {
+    staleTime: Infinity,
+    enabled: !!persona,
+  });
   const forum = forums?.[forumAlias];
 
   if (!forum) {
     return null;
   }
 
-  return (
+  const forumInfo = (
     <Link href={`/f/${forumAlias}`} passHref>
       <a
         css={css`
           display: inline-flex;
           align-items: center;
+          padding: 16px 0;
         `}
         {...props}
       >
@@ -75,5 +81,31 @@ export default function PostInfo({ forumAlias, ...props }) {
         </span>
       </a>
     </Link>
+  );
+
+  const userInfo = personaInfo && (
+    <UserInfo
+      gender={personaInfo.gender}
+      withNickname
+      school={personaInfo.nickname}
+      department={personaInfo.uid}
+      postAvatar={personaInfo.postAvatar}
+      css={css`
+        width: 100%;
+        padding: 16px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      `}
+    >
+      {personaInfo.postCount} 篇文章
+      <span aria-hidden>・</span>
+      {personaInfo.subscriptionCount} 位粉絲
+    </UserInfo>
+  );
+
+  return (
+    <>
+      {userInfo}
+      {forumInfo}
+    </>
   );
 }
