@@ -204,7 +204,6 @@ export default function SearchPostsFilter() {
             justify-content: center;
             height: 18px;
             width: 18px;
-            box-sizing: border-box;
             background-color: #fff;
             margin-right: 8px;
             border-radius: 2px;

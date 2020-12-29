@@ -18,7 +18,6 @@ function PostFloorPage() {
     <div
       css={css`
         padding: 32px 60px;
-        box-sizing: border-box;
       `}
     >
       {post && <Head title={`${post.title} - B${floor} 回應`} />}

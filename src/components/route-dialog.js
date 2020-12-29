@@ -41,7 +41,6 @@ const Dialog = forwardRef(
         hide={hide}
         css={css`
           position: relative;
-          box-sizing: border-box;
           margin: auto;
           background: #fff;
 

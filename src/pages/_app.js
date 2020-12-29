@@ -5,6 +5,7 @@ import { QueryClientProvider, QueryClient } from 'react-query';
 import { Hydrate, dehydrate } from 'react-query/hydration';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'reakit';
+import 'modern-normalize';
 import queryFn from '../utils/query-fn';
 
 const GlobalStyle = createGlobalStyle`
@@ -16,7 +17,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-size: 14px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

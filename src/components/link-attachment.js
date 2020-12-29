@@ -11,7 +11,6 @@ export const LinkWrapper = styled.a`
   height: 92px;
   overflow: hidden;
   color: rgba(0, 0, 0, 0.35);
-  box-sizing: border-box;
 `;
 
 const Description = styled.p`

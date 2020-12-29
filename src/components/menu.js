@@ -34,7 +34,6 @@ const MenuItem = forwardRef(({ menu, isActive, children, ...props }, ref) => {
       ref={ref}
       css={css`
         display: inline-flex;
-        box-sizing: border-box;
         padding: 8px 12px;
         justify-content: space-between;
         align-items: center;

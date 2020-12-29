@@ -19,6 +19,7 @@ export default function ForumItem({ forum }) {
           color: #000;
           height: 28px;
           padding: 8px 16px 8px 14px;
+          box-sizing: content-box;
         `}
       >
         <span

@@ -126,7 +126,6 @@ export default withLayout((children) => (props) => (
       border-radius: 12px;
       padding: 20px 60px;
       width: 760px;
-      box-sizing: border-box;
     `}
   >
     {children}

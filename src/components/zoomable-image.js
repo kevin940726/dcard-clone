@@ -20,9 +20,9 @@ export default function ZoomableImage({ children, ...props }) {
         css={css`
           cursor: zoom-in;
 
-          /* Weird hack for next/image to work in post content */
+          /* Weird hack for next/image to work in post content in Safari */
           > div {
-            max-height: 100%;
+            max-height: 60vh;
           }
         `}
       >
@@ -80,6 +80,7 @@ export default function ZoomableImage({ children, ...props }) {
                 css={css`
                   max-width: 100%;
                   max-height: 100%;
+                  object-fit: contain;
                 `}
               />
               <VisuallyHidden>縮小圖片</VisuallyHidden>

@@ -173,7 +173,6 @@ function Layout({ children, aside, ...props }) {
             max-width: 1280px;
             height: 100%;
             margin: 0 auto;
-            box-sizing: border-box;
           `}
         >
           <a

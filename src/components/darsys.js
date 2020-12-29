@@ -26,6 +26,7 @@ function Item({
         height: 40px;
         padding: 8px 0 8px 15px;
         position: relative;
+        box-sizing: content-box;
 
         &:nth-child(2n + 1) {
           margin-right: 43px;

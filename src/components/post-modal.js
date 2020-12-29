@@ -96,7 +96,6 @@ export default function PostModal({
           top: 0;
           width: 728px;
           min-height: 100%;
-          box-sizing: border-box;
           margin: 0 auto;
           background: #fff;
 
