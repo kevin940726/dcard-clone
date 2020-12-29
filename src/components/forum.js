@@ -320,17 +320,15 @@ Forum.prefetchQueries = async function prefetchQueries(queryClient, context) {
   if (forumAlias) {
     const forums = await queryClient.fetchQuery('forums');
 
-    const forum = forums[forumAlias];
+    const forum = Object.values(forums).find((f) => f.alias === forumAlias);
 
     if (!forum) {
       throw { statusCode: 404 };
     }
 
-    const dehydratedForums = {
-      [forumAlias]: forum,
-    };
-
-    setDehydratedForums(queryClient, dehydratedForums);
+    setDehydratedForums(queryClient, {
+      [forum.id]: forum,
+    });
   }
 };
 

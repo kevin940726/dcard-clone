@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { css } from 'styled-components';
 import { useQuery } from 'react-query';
 import { useDisclosureState, Disclosure, DisclosureContent } from 'reakit';
-import { useForumsByIDQuery } from '../hooks/use-forums-query';
+import { useForumsQuery } from '../hooks/use-forums-query';
 import useAnimateHeight from '../hooks/use-animate-height';
 import ArrowIcon from './arrow-icon';
 import ForumItem from './forum-item';
@@ -101,7 +101,7 @@ function CategoryItem({
 }
 
 function ForumCategory() {
-  const { data: forumsById } = useForumsByIDQuery();
+  const { data: forums } = useForumsQuery();
   const { data: categorization } = useQuery('forums/categorization', {
     staleTime: Infinity,
   });
@@ -143,7 +143,7 @@ function ForumCategory() {
             <CategoryItem
               id={category.id}
               name={category.name}
-              forums={forumsById}
+              forums={forums}
               expandedCategory={expandedCategory}
               setExpandedCategory={setExpandedCategory}
             />

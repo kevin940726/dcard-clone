@@ -4,11 +4,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useQuery } from 'react-query';
-import {
-  setDehydratedForums,
-  useForumsByIDQuery,
-  mapForumsById,
-} from '../hooks/use-forums-query';
+import { setDehydratedForums, useForumsQuery } from '../hooks/use-forums-query';
 import SearchBar from './search-bar';
 import customScrollbar from '../utils/custom-scrollbar';
 
@@ -134,8 +130,8 @@ function ForumsSection({ id, label, forums, children }) {
 
 function Layout({ children, aside, ...props }) {
   const router = useRouter();
-  const { data: forumsById } = useForumsByIDQuery();
-  const { data: popularForumsResult = [] } = useQuery(
+  const { data: forums } = useForumsQuery();
+  const { data: popularForumsList = [] } = useQuery(
     ['forums/popular-forums', { limit: 8 }],
     {
       staleTime: Infinity,
@@ -146,16 +142,12 @@ function Layout({ children, aside, ...props }) {
   });
 
   const popularForums = useMemo(
-    () =>
-      popularForumsResult
-        .map((forum) => forumsById?.[forum.id])
-        .filter(Boolean),
-    [popularForumsResult, forumsById]
+    () => popularForumsList.map((forum) => forums?.[forum.id]).filter(Boolean),
+    [popularForumsList, forums]
   );
   const selectedForums = useMemo(
-    () =>
-      selectedForumsList.map((forum) => forumsById?.[forum.id]).filter(Boolean),
-    [selectedForumsList, forumsById]
+    () => selectedForumsList.map((forum) => forums?.[forum.id]).filter(Boolean),
+    [selectedForumsList, forums]
   );
 
   return (
@@ -346,12 +338,9 @@ Layout.prefetchQueries = async function prefetchQueries(queryClient) {
     queryClient.prefetchQuery('posts/reactions'),
   ]);
 
-  const forumsById = mapForumsById(forums);
-
   const dehydratedForums = {};
   [...popularForumsData, ...selectedForums].forEach((forumData) => {
-    const forum = forumsById[forumData.id];
-    dehydratedForums[forum.alias] = forum;
+    dehydratedForums[forumData.id] = forums[forumData.id];
   });
 
   setDehydratedForums(queryClient, dehydratedForums);

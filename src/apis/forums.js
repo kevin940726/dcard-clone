@@ -6,7 +6,7 @@ export const getForums = async ({ nsfw = true } = {}) => {
   const map = {};
 
   for (const forum of forums) {
-    map[forum.alias] = forum;
+    map[forum.id] = forum;
   }
 
   return map;

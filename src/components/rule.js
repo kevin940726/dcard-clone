@@ -226,17 +226,15 @@ function Rule() {
 Rule.prefetchQueries = async function prefetchQueries(queryClient, context) {
   const { forumAlias } = context.router.query;
   const forums = await queryClient.fetchQuery('forums');
-  const forum = forums[forumAlias];
+  const forum = Object.values(forums).find((f) => f.alias === forumAlias);
 
   const forumID = forum.id;
 
   await queryClient.prefetchQuery([`forums/bulletin`, { forumID }]);
 
-  const dehydratedForums = {
-    [forum.alias]: forum,
-  };
-
-  setDehydratedForums(queryClient, dehydratedForums);
+  setDehydratedForums(queryClient, {
+    [forum.id]: forum,
+  });
 };
 
 export default Rule;
