@@ -4,14 +4,14 @@ import Image from 'next/image';
 import { useQuery } from 'react-query';
 import ForumPostsFrequency from './forum-posts-frequency';
 import UserInfo from './user-info';
+import { useForumByAlias } from '../hooks/use-forums-query';
 
 export default function PostInfo({ forumAlias, persona, ...props }) {
-  const { data: forums } = useQuery('forums', { staleTime: Infinity });
   const { data: personaInfo } = useQuery(`personas/${persona}`, {
     staleTime: Infinity,
     enabled: !!persona,
   });
-  const forum = forums?.[forumAlias];
+  const forum = useForumByAlias(forumAlias);
 
   if (!forum) {
     return null;
