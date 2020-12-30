@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+// TODO: Use Reakit's Tab component
 const Tab = styled.a.attrs({
   tabIndex: 0,
 })`

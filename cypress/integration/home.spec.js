@@ -56,10 +56,15 @@ describe('Home', () => {
   it('should load the posts feed', () => {
     cy.visit('/');
 
-    // There's a "全部" tab
-    cy.findByRole('link', { name: '全部' })
+    // There's a "熱門" tab
+    cy.findByRole('link', { name: '熱門' })
       .should('exist')
       .should('have.attr', 'href', '/f');
+
+    // There's a "最新" tab
+    cy.findByRole('link', { name: '最新' })
+      .should('exist')
+      .should('have.attr', 'href', '/f?latest=true');
 
     // There's a popular posts feed
     cy.findByRole('feed')
@@ -78,16 +83,7 @@ describe('Home', () => {
       });
 
     // Switch from "熱門" to "最新"
-    // TODO: Should it be a combobox or a button?
-    cy.findByRole('button', { name: '熱門' }).realClick();
-    // testing-library cannot correctly fetch menu by its label name, skipping it.
-    cy.findByRole('menu').should('have.focus');
-    cy.realPress('ArrowDown');
-    cy.findByRole('menuitem', { name: '熱門' }).should('have.focus');
-    cy.realPress('ArrowDown');
-    cy.findByRole('menuitem', { name: '最新' }).should('have.focus');
-    cy.realPress('{enter}');
-    cy.realPress('Tab');
+    cy.findByRole('link', { name: '最新' }).realClick();
 
     // There should be a latest posts feed
     cy.findByRole('feed')
