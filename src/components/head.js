@@ -11,7 +11,7 @@ export default function Head({
   images = DEFAULT_IMAGES,
   children,
 }) {
-  const normalizedTitle = title ? `${title} | Dcard` : 'Dcard';
+  const normalizedTitle = title ? `${title} | Dcard clone` : 'Dcard clone';
 
   return (
     <NextHead>
