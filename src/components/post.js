@@ -2,8 +2,8 @@ import { memo } from 'react';
 import Link from 'next/link';
 import styled, { css } from 'styled-components';
 import dynamic from 'next/dynamic';
+import withLoadingProps from 'next-dynamic-loading-props';
 import { useQuery } from 'react-query';
-import { useDialogState, DialogDisclosure } from 'reakit';
 import Head from './head';
 import ReadableDateTime from './readable-date-time';
 import UserInfo from './user-info';
@@ -19,9 +19,15 @@ const AllComments = dynamic(() => import('./all-comments'));
 const Darsys = dynamic(() => import('./darsys'));
 const PostPreview = dynamic(() => import('./post-preview'));
 const CommentModal = dynamic(() => import('./comment-modal'), { ssr: false });
-const ReactionsModal = dynamic(() => import('./reactions-modal'), {
-  ssr: false,
-});
+const ReactionsModal = withLoadingProps((useLoadingProps) =>
+  dynamic(() => import('./reactions-modal'), {
+    ssr: false,
+    loading: function ReactionsModalPlaceholder() {
+      const { className, children } = useLoadingProps();
+      return <button className={className}>{children}</button>;
+    },
+  })
+);
 
 const Section = styled.section`
   padding: 40px 60px;
@@ -36,37 +42,6 @@ const H2 = styled.h2`
   margin: 0;
   padding-bottom: 4px;
 `;
-
-function ReactionsCount({ reactions, likeCount }) {
-  const dialog = useDialogState({
-    animated: true,
-  });
-
-  return (
-    <>
-      <DialogDisclosure
-        {...dialog}
-        css={css`
-          font-size: inherit;
-          color: inherit;
-          display: inline-flex;
-          align-items: center;
-          cursor: pointer;
-        `}
-      >
-        <ReactionsList
-          reactions={reactions.slice(0, 3)}
-          size={24}
-          css={css`
-            margin-right: 6px;
-          `}
-        />
-        {likeCount}
-      </DialogDisclosure>
-      <ReactionsModal reactions={reactions} {...dialog} />
-    </>
-  );
-}
 
 let Post = function Post({ postID, placeholderData, closeButton, modalRef }) {
   const { data: post, isPlaceholderData } = useQuery(`posts/${postID}`, {
@@ -271,10 +246,25 @@ let Post = function Post({ postID, placeholderData, closeButton, modalRef }) {
             margin: 6px 0;
           `}
         >
-          <ReactionsCount
+          <ReactionsModal
+            css={css`
+              font-size: inherit;
+              color: inherit;
+              display: inline-flex;
+              align-items: center;
+              cursor: pointer;
+            `}
             reactions={post.reactions}
-            likeCount={post.likeCount}
-          />
+          >
+            <ReactionsList
+              reactions={post.reactions.slice(0, 3)}
+              size={24}
+              css={css`
+                margin-right: 6px;
+              `}
+            />
+            {post.likeCount}
+          </ReactionsModal>
           <span aria-hidden="true">・</span>
           回應 {post.commentCount}
         </footer>
